@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { Zap, Github, Twitter, Instagram, Mail } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { Zap, Globe, X, Mail, ExternalLink } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -17,11 +17,15 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Your premier destination for cutting-edge tech gadgets. We bring you the future, today.
+              Your premier destination for cutting-edge tech gadgets. We bring
+              you the future, today.
             </p>
             <div className="flex items-center gap-3 mt-6">
-              {[Twitter, Instagram, Github, Mail].map((Icon, i) => (
-                <button key={i} className="w-9 h-9 bg-dark-700 hover:bg-primary-500/10 border border-dark-500 hover:border-primary-500/40 rounded-lg flex items-center justify-center text-gray-400 hover:text-primary-400 transition-all duration-200">
+              {[X, Globe, ExternalLink, Mail].map((Icon, i) => (
+                <button
+                  key={i}
+                  className="w-9 h-9 bg-dark-700 hover:bg-primary-500/10 border border-dark-500 hover:border-primary-500/40 rounded-lg flex items-center justify-center text-gray-400 hover:text-primary-400 transition-all duration-200"
+                >
                   <Icon className="w-4 h-4" />
                 </button>
               ))}
@@ -32,20 +36,34 @@ export default function Footer() {
           <div>
             <h4 className="font-display font-semibold text-white mb-4">Shop</h4>
             <ul className="space-y-2.5">
-              {['All Products', 'New Arrivals', 'Best Sellers', 'Deals'].map((item) => (
-                <li key={item}>
-                  <Link to="/products" className="text-sm text-gray-400 hover:text-primary-400 transition-colors">{item}</Link>
-                </li>
-              ))}
+              {["All Products", "New Arrivals", "Best Sellers", "Deals"].map(
+                (item) => (
+                  <li key={item}>
+                    <Link
+                      to="/products"
+                      className="text-sm text-gray-400 hover:text-primary-400 transition-colors"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ),
+              )}
             </ul>
           </div>
 
           <div>
-            <h4 className="font-display font-semibold text-white mb-4">Support</h4>
+            <h4 className="font-display font-semibold text-white mb-4">
+              Support
+            </h4>
             <ul className="space-y-2.5">
-              {['About Us', 'Contact', 'FAQ', 'Returns'].map((item) => (
+              {["About Us", "Contact", "FAQ", "Returns"].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-sm text-gray-400 hover:text-primary-400 transition-colors">{item}</a>
+                  <a
+                    href="#"
+                    className="text-sm text-gray-400 hover:text-primary-400 transition-colors"
+                  >
+                    {item}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -56,7 +74,9 @@ export default function Footer() {
           <p className="text-xs text-gray-500">
             © {new Date().getFullYear()} Dilo's Gadget. All rights reserved.
           </p>
-          <p className="text-xs text-gray-600">Built with ❤️ using MERN Stack + Vite</p>
+          <p className="text-xs text-gray-600">
+            Built with ❤️ using MERN Stack + Vite
+          </p>
         </div>
       </div>
     </footer>
