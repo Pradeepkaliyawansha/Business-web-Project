@@ -23,22 +23,33 @@ import AdminUsers from "./pages/admin/AdminUsers";
 // Layout
 import MainLayout from "./components/layout/MainLayout";
 
+const Spinner = () => (
+  <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
+  </div>
+);
+
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading)
-    return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+
+  // Still verifying the token — wait before deciding
+  if (loading) return <Spinner />;
+
+  // No user at all → go to login
   if (!user) return <Navigate to="/login" replace />;
+
+  // Logged in but not admin → go home
   if (user.role !== "admin") return <Navigate to="/" replace />;
+
   return children;
 };
 
 const GuestRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return null;
+
+  // Don't redirect until we know for sure there's no user
+  if (loading) return <Spinner />;
+
   return !user ? children : <Navigate to="/" replace />;
 };
 
