@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 // Public pages
 import HomePage from "./pages/public/HomePage";
@@ -24,39 +25,28 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import MainLayout from "./components/layout/MainLayout";
 
 const Spinner = () => (
-  <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+  <div className="min-h-screen bg-dark-900 dark:bg-dark-900 light:bg-gray-50 flex items-center justify-center">
     <div className="w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
   </div>
 );
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
-
-  // Still verifying the token — wait before deciding
   if (loading) return <Spinner />;
-
-  // No user at all → go to login
   if (!user) return <Navigate to="/login" replace />;
-
-  // Logged in but not admin → go home
   if (user.role !== "admin") return <Navigate to="/" replace />;
-
   return children;
 };
 
 const GuestRoute = ({ children }) => {
   const { user, loading } = useAuth();
-
-  // Don't redirect until we know for sure there's no user
   if (loading) return <Spinner />;
-
   return !user ? children : <Navigate to="/" replace />;
 };
 
 function AppRoutes() {
   return (
     <Routes>
-      {/* Public */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductsPage />} />
@@ -64,7 +54,6 @@ function AppRoutes() {
         <Route path="/category/:slug" element={<CategoryPage />} />
       </Route>
 
-      {/* Auth */}
       <Route
         path="/login"
         element={
@@ -82,7 +71,6 @@ function AppRoutes() {
         }
       />
 
-      {/* Admin */}
       <Route
         path="/admin"
         element={
@@ -107,22 +95,24 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <AppRoutes />
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            style: {
-              background: "#1a1a24",
-              color: "#fff",
-              border: "1px solid #2d2d3d",
-              borderRadius: "12px",
-              fontFamily: "DM Sans, sans-serif",
-            },
-            success: { iconTheme: { primary: "#f97316", secondary: "#fff" } },
-          }}
-        />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppRoutes />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                background: "#1a1a24",
+                color: "#fff",
+                border: "1px solid #2d2d3d",
+                borderRadius: "12px",
+                fontFamily: "DM Sans, sans-serif",
+              },
+              success: { iconTheme: { primary: "#f97316", secondary: "#fff" } },
+            }}
+          />
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
