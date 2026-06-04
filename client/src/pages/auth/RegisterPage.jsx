@@ -1,38 +1,68 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { User, Mail, Lock, Phone, Eye, EyeOff, Zap } from 'lucide-react';
-import toast from 'react-hot-toast';
-import { useAuth } from '../../context/AuthContext';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { User, Mail, Lock, Phone, Eye, EyeOff, Zap } from "lucide-react";
+import toast from "react-hot-toast";
+import { useAuth } from "../../context/AuthContext";
 
 export default function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '', phone: '' });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.password.length < 6) {
-      toast.error('Password must be at least 6 characters');
+      toast.error("Password must be at least 6 characters");
       return;
     }
     setLoading(true);
     try {
-      const data = await register(form.name, form.email, form.password, form.phone);
-      toast.success(`Welcome to Dilo's Gadget, ${data.user.name.split(' ')[0]}!`);
-      navigate('/');
+      const data = await register(
+        form.name,
+        form.email,
+        form.password,
+        form.phone,
+      );
+      toast.success(
+        `Welcome to Dilo's Gadget, ${data.user.name.split(" ")[0]}!`,
+      );
+      navigate("/");
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Registration failed');
+      toast.error(err.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
   };
 
   const fields = [
-    { key: 'name', label: 'Full Name', type: 'text', placeholder: 'John Doe', icon: User },
-    { key: 'email', label: 'Email Address', type: 'email', placeholder: 'you@example.com', icon: Mail },
-    { key: 'phone', label: 'Phone (optional)', type: 'tel', placeholder: '+1 (555) 000-0000', icon: Phone },
+    {
+      key: "name",
+      label: "Full Name",
+      type: "text",
+      placeholder: "John Doe",
+      icon: User,
+    },
+    {
+      key: "email",
+      label: "Email Address",
+      type: "email",
+      placeholder: "you@example.com",
+      icon: Mail,
+    },
+    {
+      key: "phone",
+      label: "Phone (optional)",
+      type: "tel",
+      placeholder: "+1 (555) 000-0000",
+      icon: Phone,
+    },
   ];
 
   return (
@@ -46,41 +76,71 @@ export default function RegisterPage() {
             <div className="w-11 h-11 bg-primary-500 rounded-2xl flex items-center justify-center shadow-lg shadow-primary-500/30">
               <Zap className="w-6 h-6 text-white fill-white" />
             </div>
-            <span className="font-display font-bold text-2xl text-white">
+            <span
+              className="font-display font-bold text-2xl"
+              style={{ color: "var(--text-primary)" }}
+            >
               Dilo's <span className="text-primary-400">Gadget</span>
             </span>
           </Link>
-          <h1 className="font-display font-bold text-2xl text-white mt-6 mb-1">Create account</h1>
-          <p className="text-gray-400 text-sm">Join the Dilo's Gadget community</p>
+          <h1
+            className="font-display font-bold text-2xl mt-6 mb-1"
+            style={{ color: "var(--text-primary)" }}
+          >
+            Create account
+          </h1>
+          <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+            Join the Dilo's Gadget community
+          </p>
         </div>
 
         <div className="card p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             {fields.map(({ key, label, type, placeholder, icon: Icon }) => (
               <div key={key}>
-                <label className="text-sm text-gray-400 font-medium block mb-2">{label}</label>
+                <label
+                  className="text-sm font-medium block mb-2"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  {label}
+                </label>
                 <div className="relative">
-                  <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <Icon
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4"
+                    style={{ color: "var(--text-dimmer)" }}
+                  />
                   <input
                     type={type}
                     value={form[key]}
-                    onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, [key]: e.target.value })
+                    }
                     placeholder={placeholder}
                     className="input-field pl-10"
-                    required={key !== 'phone'}
+                    required={key !== "phone"}
                   />
                 </div>
               </div>
             ))}
 
             <div>
-              <label className="text-sm text-gray-400 font-medium block mb-2">Password</label>
+              <label
+                className="text-sm font-medium block mb-2"
+                style={{ color: "var(--text-muted)" }}
+              >
+                Password
+              </label>
               <div className="relative">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <Lock
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4"
+                  style={{ color: "var(--text-dimmer)" }}
+                />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
                   placeholder="Min. 6 characters"
                   className="input-field pl-10 pr-10"
                   required
@@ -89,9 +149,14 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 transition-colors hover:text-primary-400"
+                  style={{ color: "var(--text-dimmer)" }}
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -102,14 +167,25 @@ export default function RegisterPage() {
               className="btn-primary w-full py-3.5 text-base flex items-center justify-center gap-2"
             >
               {loading ? (
-                <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Creating account...</>
-              ) : 'Create Account'}
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />{" "}
+                  Creating account...
+                </>
+              ) : (
+                "Create Account"
+              )}
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
-            Already have an account?{' '}
-            <Link to="/login" className="text-primary-400 hover:text-primary-300 font-medium transition-colors">
+          <p
+            className="text-center text-sm mt-6"
+            style={{ color: "var(--text-dimmer)" }}
+          >
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-primary-400 hover:text-primary-300 font-medium transition-colors"
+            >
               Sign in
             </Link>
           </p>

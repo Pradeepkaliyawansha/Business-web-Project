@@ -31,7 +31,6 @@ export default function AdminLayout() {
     logout();
     navigate("/");
   };
-
   const isActive = (item) =>
     item.exact
       ? location.pathname === item.to
@@ -39,7 +38,6 @@ export default function AdminLayout() {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
-      {/* Logo */}
       <div
         className="px-5 py-6 border-b"
         style={{ borderColor: "var(--border-color)" }}
@@ -60,7 +58,6 @@ export default function AdminLayout() {
         </Link>
       </div>
 
-      {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map((item) => (
           <Link
@@ -76,7 +73,6 @@ export default function AdminLayout() {
         ))}
       </nav>
 
-      {/* User + actions */}
       <div
         className="px-3 pb-4 space-y-1 border-t pt-4"
         style={{ borderColor: "var(--border-color)" }}
@@ -162,7 +158,6 @@ export default function AdminLayout() {
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Top bar (mobile) */}
         <header
           className="lg:hidden flex items-center justify-between px-4 py-3 border-b"
           style={{
@@ -185,8 +180,6 @@ export default function AdminLayout() {
           </span>
           <div className="w-9" />
         </header>
-
-        {/* Content */}
         <main className="flex-1 overflow-y-auto p-4 lg:p-8">
           <Outlet />
         </main>

@@ -1,17 +1,26 @@
-import { Link } from 'react-router-dom';
-import { Star, ShoppingCart, Zap } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { Star, ShoppingCart, Zap } from "lucide-react";
 
 export default function ProductCard({ product }) {
-  const discount = product.originalPrice && product.originalPrice > product.price
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0;
-
+  const discount =
+    product.originalPrice && product.originalPrice > product.price
+      ? Math.round(
+          ((product.originalPrice - product.price) / product.originalPrice) *
+            100,
+        )
+      : 0;
   const mainImage = product.images?.[0]?.url;
 
   return (
-    <Link to={`/products/${product._id}`} className="card-hover group block animate-fade-in">
+    <Link
+      to={`/products/${product._id}`}
+      className="card-hover group block animate-fade-in"
+    >
       {/* Image */}
-      <div className="relative aspect-square bg-dark-700 overflow-hidden">
+      <div
+        className="relative aspect-square overflow-hidden"
+        style={{ backgroundColor: "var(--bg-surface-2)" }}
+      >
         {mainImage ? (
           <img
             src={mainImage}
@@ -20,11 +29,14 @@ export default function ProductCard({ product }) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <Zap className="w-16 h-16 text-dark-500" />
+            <Zap
+              className="w-16 h-16"
+              style={{ color: "var(--border-color-dark)" }}
+            />
           </div>
         )}
 
-        {/* Badges overlay */}
+        {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
           {discount > 0 && (
             <span className="badge bg-primary-500 text-white text-xs font-bold px-2 py-0.5 rounded-lg">
@@ -58,10 +70,15 @@ export default function ProductCard({ product }) {
             {product.category.icon} {product.category.name}
           </span>
         )}
-        <h3 className="font-display font-semibold text-white mt-1 line-clamp-2 group-hover:text-primary-300 transition-colors text-sm leading-snug">
+        <h3
+          className="font-display font-semibold mt-1 line-clamp-2 group-hover:text-primary-300 transition-colors text-sm leading-snug"
+          style={{ color: "var(--text-primary)" }}
+        >
           {product.name}
         </h3>
-        <p className="text-xs text-gray-500 mt-0.5">{product.brand}</p>
+        <p className="text-xs mt-0.5" style={{ color: "var(--text-dimmer)" }}>
+          {product.brand}
+        </p>
 
         {/* Rating */}
         {product.numReviews > 0 && (
@@ -70,21 +87,34 @@ export default function ProductCard({ product }) {
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-3 h-3 ${i < Math.round(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-dark-500'}`}
+                  className={`w-3 h-3 ${i < Math.round(product.rating) ? "text-yellow-400 fill-yellow-400" : ""}`}
+                  style={
+                    i >= Math.round(product.rating)
+                      ? { color: "var(--border-color-dark)" }
+                      : {}
+                  }
                 />
               ))}
             </div>
-            <span className="text-xs text-gray-500">({product.numReviews})</span>
+            <span className="text-xs" style={{ color: "var(--text-dimmer)" }}>
+              ({product.numReviews})
+            </span>
           </div>
         )}
 
         {/* Price */}
         <div className="flex items-center gap-2 mt-3">
-          <span className="font-display font-bold text-white text-lg">
+          <span
+            className="font-display font-bold text-lg"
+            style={{ color: "var(--text-primary)" }}
+          >
             ${product.price.toFixed(2)}
           </span>
           {product.originalPrice > product.price && (
-            <span className="text-sm text-gray-500 line-through">
+            <span
+              className="text-sm line-through"
+              style={{ color: "var(--text-dimmer)" }}
+            >
               ${product.originalPrice.toFixed(2)}
             </span>
           )}

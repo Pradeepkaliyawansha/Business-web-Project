@@ -17,8 +17,6 @@ export default function LoginPage() {
     try {
       const data = await login(form.email, form.password);
       toast.success(`Welcome back, ${data.user.name.split(" ")[0]}!`);
-      // Navigate based on role from the API response directly — don't rely
-      // on context state which may not have updated yet at this point.
       navigate(data.user.role === "admin" ? "/admin" : "/", { replace: true });
     } catch (err) {
       toast.error(
@@ -35,30 +33,43 @@ export default function LoginPage() {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
 
       <div className="relative w-full max-w-md animate-scale-in">
-        {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5">
             <div className="w-11 h-11 bg-primary-500 rounded-2xl flex items-center justify-center shadow-lg shadow-primary-500/30">
               <Zap className="w-6 h-6 text-white fill-white" />
             </div>
-            <span className="font-display font-bold text-2xl text-white">
+            <span
+              className="font-display font-bold text-2xl"
+              style={{ color: "var(--text-primary)" }}
+            >
               Dilo's <span className="text-primary-400">Gadget</span>
             </span>
           </Link>
-          <h1 className="font-display font-bold text-2xl text-white mt-6 mb-1">
+          <h1
+            className="font-display font-bold text-2xl mt-6 mb-1"
+            style={{ color: "var(--text-primary)" }}
+          >
             Welcome back
           </h1>
-          <p className="text-gray-400 text-sm">Sign in to your account</p>
+          <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+            Sign in to your account
+          </p>
         </div>
 
         <div className="card p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="text-sm text-gray-400 font-medium block mb-2">
+              <label
+                className="text-sm font-medium block mb-2"
+                style={{ color: "var(--text-muted)" }}
+              >
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <Mail
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4"
+                  style={{ color: "var(--text-dimmer)" }}
+                />
                 <input
                   type="email"
                   value={form.email}
@@ -72,11 +83,17 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="text-sm text-gray-400 font-medium block mb-2">
+              <label
+                className="text-sm font-medium block mb-2"
+                style={{ color: "var(--text-muted)" }}
+              >
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <Lock
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4"
+                  style={{ color: "var(--text-dimmer)" }}
+                />
                 <input
                   type={showPassword ? "text" : "password"}
                   value={form.password}
@@ -91,7 +108,8 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 transition-colors hover:text-primary-400"
+                  style={{ color: "var(--text-dimmer)" }}
                 >
                   {showPassword ? (
                     <EyeOff className="w-4 h-4" />
@@ -118,7 +136,10 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
+          <p
+            className="text-center text-sm mt-6"
+            style={{ color: "var(--text-dimmer)" }}
+          >
             Don't have an account?{" "}
             <Link
               to="/register"
@@ -129,12 +150,22 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Demo credentials hint */}
-        <div className="mt-4 p-4 bg-dark-800/50 border border-dark-600 rounded-xl text-center">
-          <p className="text-xs text-gray-500">
+        <div
+          className="mt-4 p-4 rounded-xl text-center border"
+          style={{
+            backgroundColor: "var(--bg-surface)",
+            borderColor: "var(--border-color)",
+          }}
+        >
+          <p className="text-xs" style={{ color: "var(--text-dimmer)" }}>
             Demo admin:{" "}
-            <span className="text-gray-400 font-mono">admin@dilos.com</span> /{" "}
-            <span className="text-gray-400 font-mono">admin123</span>
+            <span className="font-mono" style={{ color: "var(--text-muted)" }}>
+              admin@dilos.com
+            </span>{" "}
+            /{" "}
+            <span className="font-mono" style={{ color: "var(--text-muted)" }}>
+              admin123
+            </span>
           </p>
         </div>
       </div>

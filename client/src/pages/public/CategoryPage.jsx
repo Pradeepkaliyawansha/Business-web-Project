@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import api from '../../utils/api';
-import ProductCard from '../../components/common/ProductCard';
-import { PageLoader } from '../../components/common/Loader';
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import api from "../../utils/api";
+import ProductCard from "../../components/common/ProductCard";
+import { PageLoader } from "../../components/common/Loader";
 
 export default function CategoryPage() {
   const { slug } = useParams();
@@ -14,11 +14,13 @@ export default function CategoryPage() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const catRes = await api.get('/categories');
+        const catRes = await api.get("/categories");
         const cat = catRes.data.categories.find((c) => c.slug === slug);
         setCategory(cat);
         if (cat) {
-          const prodRes = await api.get(`/products?category=${cat._id}&limit=24`);
+          const prodRes = await api.get(
+            `/products?category=${cat._id}&limit=24`,
+          );
           setProducts(prodRes.data.products);
         }
       } catch (err) {
@@ -34,26 +36,49 @@ export default function CategoryPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-fade-in">
-      <div className="flex items-center gap-2 text-sm text-gray-500 mb-8">
-        <Link to="/" className="hover:text-primary-400 transition-colors">Home</Link>
+      <div
+        className="flex items-center gap-2 text-sm mb-8"
+        style={{ color: "var(--text-dimmer)" }}
+      >
+        <Link to="/" className="hover:text-primary-400 transition-colors">
+          Home
+        </Link>
         <span>/</span>
-        <span className="text-gray-300">{category?.name || slug}</span>
+        <span style={{ color: "var(--text-secondary)" }}>
+          {category?.name || slug}
+        </span>
       </div>
 
       <div className="flex items-center gap-4 mb-10">
-        <div className="text-5xl">{category?.icon || '📦'}</div>
+        <div className="text-5xl">{category?.icon || "📦"}</div>
         <div>
-          <h1 className="font-display font-bold text-3xl text-white">{category?.name || slug}</h1>
-          <p className="text-gray-400 text-sm mt-1">{products.length} products</p>
+          <h1
+            className="font-display font-bold text-3xl"
+            style={{ color: "var(--text-primary)" }}
+          >
+            {category?.name || slug}
+          </h1>
+          <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>
+            {products.length} products
+          </p>
         </div>
       </div>
 
       {products.length === 0 ? (
         <div className="text-center py-20">
           <div className="text-6xl mb-4">📦</div>
-          <h3 className="font-display font-semibold text-xl text-white mb-2">No products yet</h3>
-          <p className="text-gray-400 mb-6">Check back soon for new arrivals in this category</p>
-          <Link to="/products" className="btn-primary">Browse All Products</Link>
+          <h3
+            className="font-display font-semibold text-xl mb-2"
+            style={{ color: "var(--text-primary)" }}
+          >
+            No products yet
+          </h3>
+          <p className="mb-6" style={{ color: "var(--text-muted)" }}>
+            Check back soon for new arrivals
+          </p>
+          <Link to="/products" className="btn-primary">
+            Browse All Products
+          </Link>
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">

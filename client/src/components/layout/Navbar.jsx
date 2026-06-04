@@ -36,7 +36,7 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass shadow-2xl shadow-black/20" : "bg-transparent"
+        scrolled ? "glass shadow-2xl shadow-black/10" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,7 +46,10 @@ export default function Navbar() {
             <div className="w-9 h-9 bg-primary-500 rounded-xl flex items-center justify-center group-hover:bg-primary-400 transition-colors shadow-lg shadow-primary-500/30">
               <Zap className="w-5 h-5 text-white fill-white" />
             </div>
-            <span className="font-display font-bold text-xl text-white">
+            <span
+              className="font-display font-bold text-xl"
+              style={{ color: "var(--text-primary)" }}
+            >
               Dilo's <span className="text-primary-400">Gadget</span>
             </span>
           </Link>
@@ -60,8 +63,21 @@ export default function Navbar() {
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
                   location.pathname === link.href
                     ? "text-primary-400 bg-primary-500/10"
-                    : "text-gray-400 hover:text-white hover:bg-white/10"
+                    : "hover:bg-primary-500/5"
                 }`}
+                style={
+                  location.pathname !== link.href
+                    ? { color: "var(--text-muted)" }
+                    : {}
+                }
+                onMouseEnter={(e) => {
+                  if (location.pathname !== link.href)
+                    e.currentTarget.style.color = "var(--text-primary)";
+                }}
+                onMouseLeave={(e) => {
+                  if (location.pathname !== link.href)
+                    e.currentTarget.style.color = "var(--text-muted)";
+                }}
               >
                 {link.label}
               </Link>
@@ -72,7 +88,16 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={() => navigate("/products")}
-              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+              className="p-2 rounded-lg transition-all"
+              style={{ color: "var(--text-muted)" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "var(--text-primary)";
+                e.currentTarget.style.backgroundColor = "var(--bg-surface-2)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "var(--text-muted)";
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
             >
               <Search className="w-5 h-5" />
             </button>
@@ -105,7 +130,7 @@ export default function Navbar() {
 
                 {userDropdown && (
                   <div
-                    className="absolute right-0 mt-2 w-52 rounded-xl shadow-2xl shadow-black/40 overflow-hidden animate-slide-down border"
+                    className="absolute right-0 mt-2 w-52 rounded-xl shadow-2xl shadow-black/20 overflow-hidden animate-slide-down border"
                     style={{
                       backgroundColor: "var(--bg-card)",
                       borderColor: "var(--border-color)",
@@ -133,16 +158,14 @@ export default function Navbar() {
                         to="/admin"
                         className="flex items-center gap-2.5 px-4 py-3 text-sm text-primary-400 hover:bg-primary-500/10 transition-colors"
                       >
-                        <ShieldCheck className="w-4 h-4" />
-                        Admin Panel
+                        <ShieldCheck className="w-4 h-4" /> Admin Panel
                       </Link>
                     )}
                     <button
                       onClick={handleLogout}
                       className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
                     >
-                      <LogOut className="w-4 h-4" />
-                      Sign Out
+                      <LogOut className="w-4 h-4" /> Sign Out
                     </button>
                   </div>
                 )}
@@ -164,7 +187,8 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+              className="p-2 rounded-lg transition-all"
+              style={{ color: "var(--text-muted)" }}
             >
               {menuOpen ? (
                 <X className="w-5 h-5" />
@@ -190,8 +214,13 @@ export default function Navbar() {
                 className={`block px-4 py-3 rounded-xl font-medium transition-all ${
                   location.pathname === link.href
                     ? "text-primary-400 bg-primary-500/10"
-                    : "text-gray-400 hover:text-white hover:bg-white/10"
+                    : "hover:bg-primary-500/5"
                 }`}
+                style={
+                  location.pathname !== link.href
+                    ? { color: "var(--text-muted)" }
+                    : {}
+                }
               >
                 {link.label}
               </Link>

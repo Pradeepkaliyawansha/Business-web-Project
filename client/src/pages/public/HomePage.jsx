@@ -1,9 +1,16 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Shield, Truck, Headphones, ChevronRight } from 'lucide-react';
-import api from '../../utils/api';
-import ProductCard from '../../components/common/ProductCard';
-import { PageLoader } from '../../components/common/Loader';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Zap,
+  Shield,
+  Truck,
+  Headphones,
+  ChevronRight,
+} from "lucide-react";
+import api from "../../utils/api";
+import ProductCard from "../../components/common/ProductCard";
+import { PageLoader } from "../../components/common/Loader";
 
 export default function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -14,8 +21,8 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         const [productsRes, categoriesRes] = await Promise.all([
-          api.get('/products?featured=true&limit=8'),
-          api.get('/categories'),
+          api.get("/products?featured=true&limit=8"),
+          api.get("/categories"),
         ]);
         setFeaturedProducts(productsRes.data.products);
         setCategories(categoriesRes.data.categories);
@@ -31,17 +38,16 @@ export default function HomePage() {
   if (loading) return <PageLoader />;
 
   const perks = [
-    { icon: Truck, title: 'Free Shipping', desc: 'On orders over $50' },
-    { icon: Shield, title: '2-Year Warranty', desc: 'On all products' },
-    { icon: Headphones, title: '24/7 Support', desc: 'Always here to help' },
-    { icon: Zap, title: 'Fast Delivery', desc: '2-3 business days' },
+    { icon: Truck, title: "Free Shipping", desc: "On orders over $50" },
+    { icon: Shield, title: "2-Year Warranty", desc: "On all products" },
+    { icon: Headphones, title: "24/7 Support", desc: "Always here to help" },
+    { icon: Zap, title: "Fast Delivery", desc: "2-3 business days" },
   ];
 
   return (
     <div className="animate-fade-in">
       {/* Hero */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        {/* Background effects */}
         <div className="absolute inset-0 bg-grid-pattern opacity-100" />
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-primary-500/5 rounded-full blur-3xl" />
@@ -51,36 +57,63 @@ export default function HomePage() {
             <div className="animate-slide-up">
               <div className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-1.5 mb-6">
                 <div className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-pulse" />
-                <span className="text-xs text-primary-400 font-medium tracking-wide uppercase">New Arrivals Available</span>
+                <span className="text-xs text-primary-400 font-medium tracking-wide uppercase">
+                  New Arrivals Available
+                </span>
               </div>
 
-              <h1 className="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-none text-white mb-6">
-                The Future of{' '}
-                <span className="gradient-text">Tech</span>
+              <h1
+                className="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-none mb-6"
+                style={{ color: "var(--text-primary)" }}
+              >
+                The Future of <span className="gradient-text">Tech</span>
                 <br />
                 Is Here
               </h1>
 
-              <p className="text-gray-400 text-lg leading-relaxed mb-8 max-w-md">
-                Discover the latest gadgets and electronics at Dilo's Gadget. Premium quality, competitive prices, and unmatched support.
+              <p
+                className="text-lg leading-relaxed mb-8 max-w-md"
+                style={{ color: "var(--text-muted)" }}
+              >
+                Discover the latest gadgets and electronics at Dilo's Gadget.
+                Premium quality, competitive prices, and unmatched support.
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <Link to="/products" className="btn-primary flex items-center gap-2 text-base">
-                  Shop Now
-                  <ArrowRight className="w-4 h-4" />
+                <Link
+                  to="/products"
+                  className="btn-primary flex items-center gap-2 text-base"
+                >
+                  Shop Now <ArrowRight className="w-4 h-4" />
                 </Link>
-                <Link to="/products?featured=true" className="btn-secondary flex items-center gap-2 text-base">
+                <Link
+                  to="/products?featured=true"
+                  className="btn-secondary flex items-center gap-2 text-base"
+                >
                   Featured Deals
                 </Link>
               </div>
 
               {/* Stats */}
               <div className="flex flex-wrap gap-8 mt-12">
-                {[['500+', 'Products'], ['10K+', 'Happy Customers'], ['4.9★', 'Avg Rating']].map(([val, label]) => (
+                {[
+                  ["500+", "Products"],
+                  ["10K+", "Happy Customers"],
+                  ["4.9★", "Avg Rating"],
+                ].map(([val, label]) => (
                   <div key={label}>
-                    <div className="font-display font-bold text-2xl text-white">{val}</div>
-                    <div className="text-xs text-gray-500 mt-0.5">{label}</div>
+                    <div
+                      className="font-display font-bold text-2xl"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      {val}
+                    </div>
+                    <div
+                      className="text-xs mt-0.5"
+                      style={{ color: "var(--text-dimmer)" }}
+                    >
+                      {label}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -96,13 +129,32 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-                {/* Floating cards */}
                 {[
-                  { label: 'Latest Tech', sub: 'Smartphones & More', pos: '-top-4 -left-8' },
-                  { label: 'Best Deals', sub: 'Up to 40% off', pos: '-bottom-4 -right-8' },
+                  {
+                    label: "Latest Tech",
+                    sub: "Smartphones & More",
+                    pos: "-top-4 -left-8",
+                  },
+                  {
+                    label: "Best Deals",
+                    sub: "Up to 40% off",
+                    pos: "-bottom-4 -right-8",
+                  },
                 ].map(({ label, sub, pos }) => (
-                  <div key={label} className={`absolute ${pos} bg-dark-800 border border-dark-600 rounded-2xl p-4 shadow-2xl`}>
-                    <div className="font-display font-semibold text-white text-sm">{label}</div>
+                  <div
+                    key={label}
+                    className={`absolute ${pos} rounded-2xl p-4 shadow-2xl border`}
+                    style={{
+                      backgroundColor: "var(--hero-card-bg)",
+                      borderColor: "var(--hero-card-border)",
+                    }}
+                  >
+                    <div
+                      className="font-display font-semibold text-sm"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      {label}
+                    </div>
                     <div className="text-xs text-primary-400 mt-0.5">{sub}</div>
                   </div>
                 ))}
@@ -113,7 +165,13 @@ export default function HomePage() {
       </section>
 
       {/* Perks */}
-      <section className="border-y border-dark-600 bg-dark-800/30">
+      <section
+        className="border-y"
+        style={{
+          backgroundColor: "var(--perk-bg)",
+          borderColor: "var(--perk-border)",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {perks.map(({ icon: Icon, title, desc }) => (
@@ -122,8 +180,18 @@ export default function HomePage() {
                   <Icon className="w-5 h-5 text-primary-400" />
                 </div>
                 <div>
-                  <div className="font-display font-semibold text-sm text-white">{title}</div>
-                  <div className="text-xs text-gray-500">{desc}</div>
+                  <div
+                    className="font-display font-semibold text-sm"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    {title}
+                  </div>
+                  <div
+                    className="text-xs"
+                    style={{ color: "var(--text-dimmer)" }}
+                  >
+                    {desc}
+                  </div>
                 </div>
               </div>
             ))}
@@ -136,10 +204,16 @@ export default function HomePage() {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <p className="text-primary-400 text-sm font-medium uppercase tracking-wider mb-2">Browse By</p>
+              <p className="text-primary-400 text-sm font-medium uppercase tracking-wider mb-2">
+                Browse By
+              </p>
               <h2 className="section-title">Categories</h2>
             </div>
-            <Link to="/products" className="flex items-center gap-1 text-sm text-gray-400 hover:text-primary-400 transition-colors">
+            <Link
+              to="/products"
+              className="flex items-center gap-1 text-sm hover:text-primary-400 transition-colors"
+              style={{ color: "var(--text-muted)" }}
+            >
               View all <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -151,11 +225,19 @@ export default function HomePage() {
                 className="card-hover p-5 text-center group"
               >
                 <div className="text-4xl mb-3">{cat.icon}</div>
-                <h3 className="font-display font-semibold text-sm text-white group-hover:text-primary-400 transition-colors">
+                <h3
+                  className="font-display font-semibold text-sm group-hover:text-primary-400 transition-colors"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   {cat.name}
                 </h3>
                 {cat.description && (
-                  <p className="text-xs text-gray-500 mt-1 line-clamp-1">{cat.description}</p>
+                  <p
+                    className="text-xs mt-1 line-clamp-1"
+                    style={{ color: "var(--text-dimmer)" }}
+                  >
+                    {cat.description}
+                  </p>
                 )}
               </Link>
             ))}
@@ -168,10 +250,16 @@ export default function HomePage() {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <p className="text-primary-400 text-sm font-medium uppercase tracking-wider mb-2">Hand-Picked</p>
+              <p className="text-primary-400 text-sm font-medium uppercase tracking-wider mb-2">
+                Hand-Picked
+              </p>
               <h2 className="section-title">Featured Products</h2>
             </div>
-            <Link to="/products?featured=true" className="flex items-center gap-1 text-sm text-gray-400 hover:text-primary-400 transition-colors">
+            <Link
+              to="/products?featured=true"
+              className="flex items-center gap-1 text-sm hover:text-primary-400 transition-colors"
+              style={{ color: "var(--text-muted)" }}
+            >
               View all <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -188,13 +276,23 @@ export default function HomePage() {
         <div className="relative bg-gradient-to-br from-primary-500/20 to-primary-700/10 border border-primary-500/20 rounded-3xl overflow-hidden p-10 lg:p-16 text-center">
           <div className="absolute inset-0 bg-grid-pattern opacity-50" />
           <div className="relative">
-            <h2 className="font-display font-bold text-4xl lg:text-5xl text-white mb-4">
+            <h2
+              className="font-display font-bold text-4xl lg:text-5xl mb-4"
+              style={{ color: "var(--text-primary)" }}
+            >
               Ready to Upgrade?
             </h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-md mx-auto">
-              Join thousands of tech enthusiasts who trust Dilo's Gadget for their premium tech needs.
+            <p
+              className="text-lg mb-8 max-w-md mx-auto"
+              style={{ color: "var(--text-muted)" }}
+            >
+              Join thousands of tech enthusiasts who trust Dilo's Gadget for
+              their premium tech needs.
             </p>
-            <Link to="/register" className="btn-primary text-base px-8 py-3.5 inline-flex items-center gap-2">
+            <Link
+              to="/register"
+              className="btn-primary text-base px-8 py-3.5 inline-flex items-center gap-2"
+            >
               Create Free Account <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
