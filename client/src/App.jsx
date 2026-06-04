@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import { ThemeProvider } from "./context/ThemeContext";
+import { ThemeProvider, useTheme } from "./context/ThemeContext";
 
 // Public pages
 import HomePage from "./pages/public/HomePage";
@@ -25,7 +25,10 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import MainLayout from "./components/layout/MainLayout";
 
 const Spinner = () => (
-  <div className="min-h-screen bg-dark-900 dark:bg-dark-900 light:bg-gray-50 flex items-center justify-center">
+  <div
+    className="min-h-screen flex items-center justify-center"
+    style={{ backgroundColor: "var(--bg-card)" }}
+  >
     <div className="w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
   </div>
 );
@@ -92,25 +95,38 @@ function AppRoutes() {
   );
 }
 
+function ToasterWrapper() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  return (
+    <Toaster
+      position="top-right"
+      toastOptions={{
+        style: {
+          background: isDark ? "#1a1a24" : "#ffffff",
+          color: isDark ? "#fff" : "#111827",
+          border: `1px solid ${isDark ? "#2d2d3d" : "#e5e7eb"}`,
+          borderRadius: "12px",
+          fontFamily: "DM Sans, sans-serif",
+        },
+        success: {
+          iconTheme: {
+            primary: "#f97316",
+            secondary: isDark ? "#fff" : "#111827",
+          },
+        },
+      }}
+    />
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
           <AppRoutes />
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              style: {
-                background: "#1a1a24",
-                color: "#fff",
-                border: "1px solid #2d2d3d",
-                borderRadius: "12px",
-                fontFamily: "DM Sans, sans-serif",
-              },
-              success: { iconTheme: { primary: "#f97316", secondary: "#fff" } },
-            }}
-          />
+          <ToasterWrapper />
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

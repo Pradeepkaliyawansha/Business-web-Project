@@ -1,16 +1,24 @@
-import { useState } from 'react';
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  LayoutDashboard, Package, Tag, Users, LogOut,
-  Zap, Menu, X, ChevronRight, Home
-} from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+  LayoutDashboard,
+  Package,
+  Tag,
+  Users,
+  LogOut,
+  Zap,
+  Menu,
+  X,
+  ChevronRight,
+  Home,
+} from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 const navItems = [
-  { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { to: '/admin/products', label: 'Products', icon: Package },
-  { to: '/admin/categories', label: 'Categories', icon: Tag },
-  { to: '/admin/users', label: 'Users', icon: Users },
+  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/admin/products", label: "Products", icon: Package },
+  { to: "/admin/categories", label: "Categories", icon: Tag },
+  { to: "/admin/users", label: "Users", icon: Users },
 ];
 
 export default function AdminLayout() {
@@ -19,21 +27,34 @@ export default function AdminLayout() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleLogout = () => { logout(); navigate('/'); };
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   const isActive = (item) =>
-    item.exact ? location.pathname === item.to : location.pathname.startsWith(item.to);
+    item.exact
+      ? location.pathname === item.to
+      : location.pathname.startsWith(item.to);
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="px-5 py-6 border-b border-dark-600">
+      <div
+        className="px-5 py-6 border-b"
+        style={{ borderColor: "var(--border-color)" }}
+      >
         <Link to="/" className="flex items-center gap-2.5">
           <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center shadow-lg shadow-primary-500/30">
             <Zap className="w-4 h-4 text-white fill-white" />
           </div>
           <div>
-            <span className="font-display font-bold text-sm text-white">Dilo's Gadget</span>
+            <span
+              className="font-display font-bold text-sm"
+              style={{ color: "var(--input-text)" }}
+            >
+              Dilo's Gadget
+            </span>
             <div className="text-xs text-primary-400">Admin Panel</div>
           </div>
         </Link>
@@ -46,7 +67,7 @@ export default function AdminLayout() {
             key={item.to}
             to={item.to}
             onClick={() => setSidebarOpen(false)}
-            className={`admin-sidebar-link ${isActive(item) ? 'active' : ''}`}
+            className={`admin-sidebar-link ${isActive(item) ? "active" : ""}`}
           >
             <item.icon className="w-4 h-4 flex-shrink-0" />
             <span className="text-sm">{item.label}</span>
@@ -56,7 +77,10 @@ export default function AdminLayout() {
       </nav>
 
       {/* User + actions */}
-      <div className="px-3 pb-4 space-y-1 border-t border-dark-600 pt-4">
+      <div
+        className="px-3 pb-4 space-y-1 border-t pt-4"
+        style={{ borderColor: "var(--border-color)" }}
+      >
         <Link
           to="/"
           className="admin-sidebar-link text-sm"
@@ -64,9 +88,25 @@ export default function AdminLayout() {
         >
           <Home className="w-4 h-4" /> View Store
         </Link>
-        <div className="px-4 py-3 rounded-xl bg-dark-700 border border-dark-600">
-          <p className="text-sm font-medium text-white truncate">{user?.name}</p>
-          <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+        <div
+          className="px-4 py-3 rounded-xl border"
+          style={{
+            backgroundColor: "var(--bg-surface)",
+            borderColor: "var(--border-color)",
+          }}
+        >
+          <p
+            className="text-sm font-medium truncate"
+            style={{ color: "var(--input-text)" }}
+          >
+            {user?.name}
+          </p>
+          <p
+            className="text-xs truncate"
+            style={{ color: "var(--text-muted)" }}
+          >
+            {user?.email}
+          </p>
         </div>
         <button
           onClick={handleLogout}
@@ -79,20 +119,39 @@ export default function AdminLayout() {
   );
 
   return (
-    <div className="flex h-screen bg-dark-900 overflow-hidden">
+    <div
+      className="flex h-screen overflow-hidden"
+      style={{ backgroundColor: "var(--bg-surface)" }}
+    >
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-60 bg-dark-800 border-r border-dark-600 flex-shrink-0">
+      <aside
+        className="hidden lg:flex flex-col w-60 flex-shrink-0 border-r"
+        style={{
+          backgroundColor: "var(--bg-card)",
+          borderColor: "var(--border-color)",
+        }}
+      >
         <SidebarContent />
       </aside>
 
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="lg:hidden fixed inset-0 z-50 flex">
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-          <aside className="relative w-64 bg-dark-800 border-r border-dark-600 z-10">
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setSidebarOpen(false)}
+          />
+          <aside
+            className="relative w-64 border-r z-10"
+            style={{
+              backgroundColor: "var(--bg-card)",
+              borderColor: "var(--border-color)",
+            }}
+          >
             <button
               onClick={() => setSidebarOpen(false)}
-              className="absolute top-4 right-4 p-1 text-gray-400 hover:text-white"
+              className="absolute top-4 right-4 p-1"
+              style={{ color: "var(--text-muted)" }}
             >
               <X className="w-5 h-5" />
             </button>
@@ -104,11 +163,26 @@ export default function AdminLayout() {
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top bar (mobile) */}
-        <header className="lg:hidden flex items-center justify-between px-4 py-3 bg-dark-800 border-b border-dark-600">
-          <button onClick={() => setSidebarOpen(true)} className="p-2 text-gray-400 hover:text-white">
+        <header
+          className="lg:hidden flex items-center justify-between px-4 py-3 border-b"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            borderColor: "var(--border-color)",
+          }}
+        >
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="p-2"
+            style={{ color: "var(--text-muted)" }}
+          >
             <Menu className="w-5 h-5" />
           </button>
-          <span className="font-display font-semibold text-sm text-white">Admin Panel</span>
+          <span
+            className="font-display font-semibold text-sm"
+            style={{ color: "var(--input-text)" }}
+          >
+            Admin Panel
+          </span>
           <div className="w-9" />
         </header>
 
